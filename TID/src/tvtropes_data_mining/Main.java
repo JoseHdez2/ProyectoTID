@@ -11,9 +11,9 @@ public class Main {
 	public static void main(String[] args) {
 
 		TropesParser tp = new TropesParser();
-//		ArrayList<TropeWork> works = tp.parseDirectory("C:\\Series\\");
+		ArrayList<TropeWork> works = tp.parseDirectory("C:\\Series\\");
 		
-//		System.out.println(ArrayStringConverter.arrayToLSV(works));
+		System.out.println(ArrayStringConverter.arrayToLSV(works));
 
 		TropeWork lost = tp.parsePage("C:\\Series\\Lost.html");
 		

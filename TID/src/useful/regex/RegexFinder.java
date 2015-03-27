@@ -84,6 +84,7 @@ public class RegexFinder {
 		
 		try{	//Try to compile the provided string as the pattern to be used.
 			pattern = Pattern.compile(regex);
+			System.out.println(pattern.toString());
 		} catch (Exception e) {
 			System.err.println("RegexFinder: Couldn't compile provided string as pattern.");
 		}

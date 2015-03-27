@@ -4,15 +4,21 @@ import java.util.ArrayList;
 
 import useful.file.DirectoryFileLister;
 import useful.file.StringFromFile;
+import useful.regex.RegexCreator;
 import useful.regex.RegexFilenameHelper;
 import useful.regex.RegexFinder;
 
 public class TropesParser{
 	
-	//  vieja -> <.+?>((\\w|\\s)+?)</a>:
-//	final String tropeRegexp = "<.+?>((\\w|\\s)+?)</a>:";	//finds tropes in HTML
-	//	nueva -> (?<=\/)[^\]+?\/[^']*?(?='>[^<]+<\/a>:)
-	final String tropeRegexp = "(?<=/)[^\\]+?/[^']*?(?='>[^<]+</a>:)";	//finds tropes in HTML
+	String tropeRegexp;
+	
+	TropesParser(){
+		tropeRegexp = "[^']+";	//lo que sea pero que no pille ', que es el delimitador.
+		tropeRegexp = RegexCreator.addLookbehind("title='http://tvtropes.org/pmwiki/pmwiki.php/Main/", tropeRegexp);
+		tropeRegexp = RegexCreator.addLookahead("'>[^<]+</a>:", tropeRegexp);
+	}
+	
+//	final String tropeRegexp = "(?<=)[^']+(?=)";	//finds tropes in HTML
 	
 	public TropeWork parsePage(String htmlFilePath){
 		String htmlContent = "";
