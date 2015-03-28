@@ -9,7 +9,7 @@ public abstract class RegexCreator {
 	//TODO should I leave intoLookbehind and intoLookahead private?
 	/**
 	 * Frees you from the hassle of remembering how to write a lookbehind syntax.
-	 * Reduces the chances of messing up the hierarchy of a regular expression.
+	 * Reduces the chances of messing up the syntax of a regular expression.
 	 * @param regex	The regex that will be evaluated.
 	 * @return	A lookbehind expression, to be used for a bigger regex.
 	 */
@@ -19,7 +19,7 @@ public abstract class RegexCreator {
 
 	/**
 	 * Frees you from the hassle of remembering how to write a lookahead syntax.
-	 * Reduces the chances of messing up the hierarchy of a regular expression.
+	 * Reduces the chances of messing up the syntax of a regular expression.
 	 * @param regex	The regex that will be evaluated.
 	 * @return	A lookahead expression, to be used for a bigger regex.
 	 */

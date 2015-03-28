@@ -2,6 +2,8 @@ package tvtropes_data_mining;
 
 import java.util.ArrayList;
 
+import useful.array.StringArrayToConsole;
+
 /*
  * Class that represents a work of fiction.
  */
@@ -28,6 +30,27 @@ public class TropeWork {
 		return "Trope [Name: " + getName() + ", Tropes: " + getNumberOfTropes() + "]";
 	}
 
+	public void showTropesInConsole(){
+		StringArrayToConsole.showInConsole(getTropesRaw());
+	}
+	
+	/**
+	 * If no enum tropes exist, get the number of String tropes.
+	 * @return	Number of tropes the work contains.
+	 */
+	public int getNumberOfTropes(){
+		if(!tropes.isEmpty())
+			return tropes.size();
+		else
+			return tropesRaw.size();
+	}
+
+//TODO saveIntoFile()
+	
+	/*
+	 * Getters and setters.
+	 */
+	
 	public String getName() {
 		return name;
 	}
@@ -42,24 +65,5 @@ public class TropeWork {
 
 	public void setTropesRaw(ArrayList<String> tropesRaw) {
 		this.tropesRaw = tropesRaw;
-	}
-
-	/**
-	 * @return	Number of tropes the work contains. Enum tropes take priority.
-	 */
-	public int getNumberOfTropes(){
-		if(!tropes.isEmpty()){
-			return tropes.size();
-		}
-		else{
-			return tropesRaw.size();
-		}
-	}
-
-	public void saveAsRaw(String filePath){
-		filePath += "\\" + getName();
-		System.out.print("\nsaving into " + filePath);
-		//TODO create saveArraytoFile(filenamePath)
-		//TODO call saveArraytoFile(filePath, getTropesRaw());
 	}
 }
