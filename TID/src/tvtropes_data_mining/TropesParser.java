@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 import useful.file.DirectoryFileLister;
 import useful.file.StringFromFile;
+import useful.regex.MatchData;
 import useful.regex.RegexCreator;
 import useful.regex.RegexFilenameHelper;
-import useful.regex.RegexFinder;
+import useful.regex.TempRegexMatcher;
 
 public class TropesParser{
 	
 	String tropeRegexp;
 	
 	TropesParser(){
-		tropeRegexp = "[^']+";	//lo que sea pero que no pille ', que es el delimitador.
+//		tropeRegexp = "d";
+		tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
 		tropeRegexp = RegexCreator.addLookbehind("title='http://tvtropes.org/pmwiki/pmwiki.php/Main/", tropeRegexp);
 		tropeRegexp = RegexCreator.addLookahead("'>[^<]+</a>:", tropeRegexp);
 	}
@@ -28,17 +30,11 @@ public class TropesParser{
 			System.err.println("In parsePage(" + htmlFilePath + "), couldn't find file.");
 			return new TropeWork();
 		}
-		RegexFinder rf;
-		try{
-			rf = new RegexFinder(htmlContent, tropeRegexp);			//look for tropes
-		} catch (Exception e){
-			System.err.println("In parsePage(" + htmlFilePath + "), couldn't RegexFinder.");
-			return new TropeWork();
-		}
 			
 		TropeWork work = new TropeWork(RegexFilenameHelper.getFilename(htmlFilePath));
 	
-		work.setTropesRaw(rf.getMatchesList());
+		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);
+		work.setTropesRaw(md.getMatches());
 		
 		return work;
 	}

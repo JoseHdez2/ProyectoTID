@@ -3,14 +3,15 @@ package useful.regex;
 public abstract class RegexFilenameHelper {
 
 	//TODO getFolderHierarchyAsStringArrayList
+	//TODO change dependencies from RegexFinder to TempRegexMatcher
 	
 	/**
 	 * @param path	Path of a file.
 	 * @return		Filename of said file.
 	 */
 	public static String getFilename(String path){
-		RegexFinder rf = new RegexFinder(path, RegexCollection.getFilenameFromPath);
-		return rf.getMatchesList().get(0);
+		MatchData md = TempRegexMatcher.getMatchData(RegexCollection.getFilenameFromPath, path);
+		return md.getMatches().get(0);
 	}
 	
 	/**
@@ -18,7 +19,7 @@ public abstract class RegexFilenameHelper {
 	 * @return		Extension of said file.
 	 */
 	public static String getExtension(String path){
-		RegexFinder rf = new RegexFinder(path, RegexCollection.getExtensionFromPath);
-		return rf.getMatchesList().get(0);
+		MatchData md = TempRegexMatcher.getMatchData(RegexCollection.getExtensionFromPath, path);
+		return md.getMatches().get(0);
 	}
 }
