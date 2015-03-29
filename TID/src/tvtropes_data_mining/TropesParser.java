@@ -1,6 +1,10 @@
 package tvtropes_data_mining;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import useful.file.DirectoryFileLister;
 import useful.file.StringFromFile;
@@ -36,6 +40,8 @@ public class TropesParser{
 		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);
 		work.setTropesRaw(md.getMatches());
 		
+		Collections.sort(work.getTropesRaw());
+		
 		return work;
 	}
 
@@ -58,5 +64,42 @@ public class TropesParser{
 		}
 		
 		return works;
+	}
+	
+	public ArrayList<String> createMasterList(ArrayList<TropeWork> worksArray){
+		HashSet<String> masterHash = new HashSet<String>();
+		
+		
+		for (int i = 0; i < worksArray.size(); i++){
+			for (int j = 0; j < worksArray.get(i).getTropesRaw().size(); j++){
+				String currentTrope = worksArray.get(i).getTropesRaw().get(j);
+				masterHash.add(currentTrope);
+			}
+		}
+
+		Iterator<String> i = masterHash.iterator();
+		
+		ArrayList<String> masterList = new ArrayList<String>();
+		while (i.hasNext()){
+			masterList.add(i.next());
+		}
+		
+		Collections.sort(masterList);
+		
+		return masterList;
+	}
+	
+	public void setEnumTropes(ArrayList<TropeWork> works, ArrayList<String> masterList){
+		HashMap<String, Integer> masterMap = new HashMap<String, Integer>();
+		for (int i = 0; i < masterList.size(); i++){
+		   masterMap.put(masterList.get(i), i);
+		}
+		
+		for (int i = 0; i < works.size(); i++){
+			for (int j = 0; j < works.get(i).getTropesRaw().size(); j++){
+				works.get(i).getTropes().add(masterMap.get(works.get(i).getTropesRaw().get(j)));
+			}
+			Collections.sort(works.get(i).getTropes());
+		}
 	}
 }

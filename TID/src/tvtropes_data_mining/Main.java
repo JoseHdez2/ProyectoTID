@@ -2,7 +2,7 @@ package tvtropes_data_mining;
 
 import java.util.ArrayList;
 
-import useful.array.ArrayToString;
+import useful.array.StringArrayToOutput;
 
 //TODO create TropesLoader class, for loading from, and dealing with, post-parsing files.
 
@@ -11,29 +11,22 @@ public class Main {
 	public static void main(String[] args) {
 
 		TropesParser tp = new TropesParser();
-//		ArrayList<TropeWork> works = tp.parseDirectory("C:\\Series\\");
 		
-//		System.out.println(ArrayStringConverter.arrayToLSV(works));
-
-		TropeWork lost = tp.parsePage("C:\\Series\\Lost.html");
-		
-		System.out.println(lost);
-		System.out.println("Tropes:");
-//		lost.showTropesInConsole();
-		lost.saveIntoFolder("C:\\Series\\RawTropes\\");
-		
-		/*
-		TreeSet<String> tropeSet = new TreeSet<String>();
+		ArrayList<TropeWork> works = tp.parseDirectory("C:\\Series\\");
 		
 		for (int i = 0; i < works.size(); i++){
-			for (int j = 0; j < works.get(i).tropesRaw.size(); j++){
-				tropeSet.add(works.get(i).tropesRaw.get(j));
-			}
+			works.get(i).saveRawIntoFolder("C:\\Series\\RawTropes\\");
 		}
 		
-		Iterator i = tropeSet.iterator();
+		ArrayList<String> masterList = tp.createMasterList(works);
+		System.out.println("Master list created.");
+		StringArrayToOutput.saveIntoFile(masterList, "C:\\Series\\MasterList\\masterList.txt");
+		System.out.println("Master list saved.");
 		
-		while(i.hasNext())
-			System.out.println(i.next());*/
+		tp.setEnumTropes(works, masterList);
+		
+		for (int i = 0; i < works.size(); i++){
+			works.get(i).saveEnumIntoFolder("C:\\Series\\EnumTropes\\");
+		}
 	}
 }

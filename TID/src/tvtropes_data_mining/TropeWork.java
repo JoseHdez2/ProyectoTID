@@ -34,8 +34,16 @@ public class TropeWork {
 		StringArrayToOutput.showInConsole(getTropesRaw());
 	}
 	
-	public void saveIntoFolder(String folderPath){
+	public void saveRawIntoFolder(String folderPath){
 		StringArrayToOutput.saveIntoFile(getTropesRaw(), folderPath + getName() + ".txt");
+	}
+	
+	public void saveEnumIntoFolder(String folderPath){
+		ArrayList<String> array = new ArrayList<String>();
+		for (int i = 0; i < getTropes().size(); i++){
+			array.add(getTropes().get(i).toString());
+		}
+		StringArrayToOutput.saveIntoFile(array, folderPath + getName() + ".txt");
 	}
 	
 	/**
@@ -69,5 +77,13 @@ public class TropeWork {
 
 	public void setTropesRaw(ArrayList<String> tropesRaw) {
 		this.tropesRaw = tropesRaw;
+	}
+
+	public ArrayList<Integer> getTropes() {
+		return tropes;
+	}
+
+	public void setTropes(ArrayList<Integer> tropes) {
+		this.tropes = tropes;
 	}
 }
