@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import useful.file.DirectoryFileLister;
 import useful.file.StringFromFile;
+import useful.file.StringToFile;
 import useful.regex.MatchData;
 import useful.regex.RegexCreator;
 import useful.regex.RegexFilenameHelper;
@@ -66,6 +67,7 @@ public class TropesParser{
 		return works;
 	}
 	
+	//TODO remove repeats: TropeName == Tropename
 	public ArrayList<String> createMasterList(ArrayList<TropeWork> worksArray){
 		HashSet<String> masterHash = new HashSet<String>();
 		
@@ -101,5 +103,29 @@ public class TropesParser{
 			}
 			Collections.sort(works.get(i).getTropes());
 		}
+	}
+	
+	public void createWekaFile(ArrayList<TropeWork> works, int numberOfTropes, String filePath){
+		String wekaFile = "";
+		wekaFile = wekaFile.concat("@RELATION series");
+		for(int i = 0; i < numberOfTropes; i++){
+//			wekaFile = wekaFile.concat("\n@ATTRIBUTE trope" + i + " {0,1}");
+			wekaFile = wekaFile.concat("\n@ATTRIBUTE trope" + i + " NUMERIC");
+		}
+		wekaFile = wekaFile.concat("\n@DATA");
+		for(int i = 0; i < works.size(); i++){	//...for each TropeWork...
+			if(i % 25 == 0){	//show progress
+				System.out.format("Writing %4d of %4d ", i, works.size());
+				System.out.format("(%3d%%) ...%n", (int)((float)i/(float)works.size()*100));
+			}
+			wekaFile = wekaFile.concat("\n{");
+			for (int j = 0; j <	works.get(i).getNumberOfTropes(); j++){	//...for each Trope in the master list...
+				wekaFile = wekaFile.concat(works.get(i).getTropes().get(j) + " 1");
+				if( j < works.get(i).getNumberOfTropes()-1)
+					wekaFile = wekaFile.concat(",");
+			}
+			wekaFile = wekaFile.concat("}");
+		}
+		StringToFile.stringToFile(filePath, wekaFile);
 	}
 }

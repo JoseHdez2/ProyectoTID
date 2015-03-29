@@ -2,6 +2,7 @@ package tvtropes_data_mining;
 
 import java.util.ArrayList;
 
+import useful.array.ArrayToUnique;
 import useful.array.StringArrayToOutput;
 
 /*
@@ -56,7 +57,19 @@ public class TropeWork {
 		else
 			return tropesRaw.size();
 	}
-
+	
+	/**
+	 * @param trope	Integer of the trope we search for.
+	 * @return
+	 */
+	public boolean hasTrope(Integer trope){
+		for (int i = 0; i < getTropes().size(); i++){
+			if (trope == getTropes().get(i))
+				return true;
+		}
+		return false;
+	}
+	
 //TODO saveIntoFile()
 	
 	/*
@@ -76,7 +89,7 @@ public class TropeWork {
 	}
 
 	public void setTropesRaw(ArrayList<String> tropesRaw) {
-		this.tropesRaw = tropesRaw;
+		this.tropesRaw = ArrayToUnique.makeUnique(tropesRaw);
 	}
 
 	public ArrayList<Integer> getTropes() {
