@@ -2,7 +2,7 @@ package tvtropes_data_mining;
 
 import java.util.ArrayList;
 
-import useful.array.ArrayStringConverter;
+import useful.array.ArrayToString;
 
 //TODO create TropesLoader class, for loading from, and dealing with, post-parsing files.
 
@@ -19,7 +19,8 @@ public class Main {
 		
 		System.out.println(lost);
 		System.out.println("Tropes:");
-		lost.showTropesInConsole();
+//		lost.showTropesInConsole();
+		lost.saveIntoFolder("C:\\Series\\RawTropes\\");
 		
 		/*
 		TreeSet<String> tropeSet = new TreeSet<String>();

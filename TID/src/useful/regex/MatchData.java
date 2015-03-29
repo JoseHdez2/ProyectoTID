@@ -2,7 +2,7 @@ package useful.regex;
 
 import java.util.ArrayList;
 
-import useful.array.StringArrayToConsole;
+import useful.array.StringArrayToOutput;
 
 public class MatchData {
 	ArrayList<String> matches;	//String for each match.
@@ -14,7 +14,7 @@ public class MatchData {
 	}
 	
 	void showInConsole(){
-		StringArrayToConsole.showInConsole(getMatches());
+		StringArrayToOutput.showInConsole(getMatches());
 		System.out.println("Matches: " + getCount());
 	}
 	

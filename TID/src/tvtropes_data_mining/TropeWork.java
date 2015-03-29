@@ -2,7 +2,7 @@ package tvtropes_data_mining;
 
 import java.util.ArrayList;
 
-import useful.array.StringArrayToConsole;
+import useful.array.StringArrayToOutput;
 
 /*
  * Class that represents a work of fiction.
@@ -31,7 +31,11 @@ public class TropeWork {
 	}
 
 	public void showTropesInConsole(){
-		StringArrayToConsole.showInConsole(getTropesRaw());
+		StringArrayToOutput.showInConsole(getTropesRaw());
+	}
+	
+	public void saveIntoFolder(String folderPath){
+		StringArrayToOutput.saveIntoFile(getTropesRaw(), folderPath + getName() + ".txt");
 	}
 	
 	/**
