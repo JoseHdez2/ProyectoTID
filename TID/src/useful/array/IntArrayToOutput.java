@@ -4,15 +4,13 @@ import java.util.ArrayList;
 
 import useful.file.StringToFile;
 
-public abstract class StringArrayToOutput {
-	public static void showInConsole(ArrayList<String> list){
+public class IntArrayToOutput {
+	public static void showInConsole(ArrayList<Integer> list){
 		String str = ArrayToString.arrayToLSV(list);
 		System.out.println(str);
 	}
-	
-	public static void saveIntoFile(ArrayList<String> list, String filePath){
+	public static void saveIntoFile(ArrayList<Integer> list, String filePath){
 		String str = ArrayToString.arrayToLSV(list);
-//		System.out.println(str);
 		StringToFile.stringToFile(filePath, str);
 	}
 }

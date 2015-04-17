@@ -16,18 +16,26 @@ import useful.regex.TempRegexMatcher;
 
 public class TropesParser{
 	
-	String tropeRegexp;
-	
-	TropesParser(){
-//		tropeRegexp = "d";
-		tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
-		tropeRegexp = RegexCreator.addLookbehind("title='http://tvtropes.org/pmwiki/pmwiki.php/Main/", tropeRegexp);
-		tropeRegexp = RegexCreator.addLookahead("'>[^<]+</a>:", tropeRegexp);
-	}
+	static String lookBehind = "(?<=title='http://tvtropes.org/pmwiki/pmwiki.php/Main/)";
+	static String meat = "[^]'";
+	static String lookAhead = "(?='>[^<]+</a>:)";
+	public static String tropeRegexp = lookBehind + meat + lookAhead;
+
+//		tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
+//		tropeRegexp = RegexCreator.addLookbehind("title='http://tvtropes.org/pmwiki/pmwiki.php/Main/", tropeRegexp);
+//		tropeRegexp = RegexCreator.addLookahead("'>[^<]+</a>:", tropeRegexp);
 	
 //	final String tropeRegexp = "(?<=)[^']+(?=)";	//finds tropes in HTML
 	
-	public TropeWork parsePage(String htmlFilePath){
+	public static ArrayList<String> parseFile(String htmlContent){
+	
+		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);	//Guardamos los tropes en un objeto MatchData.
+		Collections.sort(md.getMatches());										//Ordenamos alfabeticamente.
+		
+		return md.getMatches();													//Devolvemos la lista de los tropes.
+	}
+	
+	public static TropeWork parsePage(String htmlFilePath){
 		String htmlContent = "";
 		try{
 			htmlContent = StringFromFile.fromFile(htmlFilePath);	//load file content
@@ -70,7 +78,6 @@ public class TropesParser{
 	//TODO remove repeats: TropeName == Tropename
 	public ArrayList<String> createMasterList(ArrayList<TropeWork> worksArray){
 		HashSet<String> masterHash = new HashSet<String>();
-		
 		
 		for (int i = 0; i < worksArray.size(); i++){
 			for (int j = 0; j < worksArray.get(i).getTropesRaw().size(); j++){
