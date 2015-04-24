@@ -11,6 +11,7 @@ public abstract class RegexFilenameHelper {
 	 */
 	public static String getFilename(String path){
 		MatchData md = TempRegexMatcher.getMatchData(RegexCollection.getFilenameFromPath, path);
+		System.out.println(md.getMatches());
 		return md.getMatches().get(0);
 	}
 	

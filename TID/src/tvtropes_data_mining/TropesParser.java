@@ -28,7 +28,10 @@ public class TropesParser{
 //	final String tropeRegexp = "(?<=)[^']+(?=)";	//finds tropes in HTML
 	
 	public static ArrayList<String> parseFile(String htmlContent){
-	
+		String tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
+		tropeRegexp = RegexCreator.addLookbehind("title='http://tvtropes.org/pmwiki/pmwiki.php/Main/", tropeRegexp);
+		tropeRegexp = RegexCreator.addLookahead("'>[^<]+</a>:", tropeRegexp);
+		
 		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);	//Guardamos los tropes en un objeto MatchData.
 		Collections.sort(md.getMatches());										//Ordenamos alfabeticamente.
 		

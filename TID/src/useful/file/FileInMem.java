@@ -30,7 +30,7 @@ public class FileInMem {
 		try{
 			String content = StringFromFile.fromFile(filepath);
 			setContent(content);
-		} catch (IOException e){
+		} catch (Exception e){
 			System.err.println(e.getMessage());
 		}
 	}

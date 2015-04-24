@@ -1,5 +1,8 @@
 package tvtropes_data_mining;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -7,6 +10,7 @@ import java.util.Iterator;
 
 import useful.array.StringArrayHelper;
 import useful.file.DirectoryFileLister;
+import useful.file.StringToFile;
 
 public class ColeccionSerie {
 	
@@ -15,8 +19,27 @@ public class ColeccionSerie {
 	ArrayList<Serie> generos = new ArrayList<Serie>();			//se rellena en el paso 3
 	ArrayList<String> masterList2 = new ArrayList<String>();	//se crea en el paso 4
 	
+	void askMode(){
+		boolean read = false;
+		
+		System.out.println("[P]arsear o [L]eer?");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		String response = "";
+		try {
+			response = br.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if(response.trim().toLowerCase() == "l")
+			System.out.println("Se intentara leer los archivos.");
+		else
+			System.out.println("Se parsearan los archivos.");
+	}
+	
 	ColeccionSerie(String dirCarpetaTropes, String dirCarpetaGeneros, String dirArchivoWeka){
-		ArrayList<Serie> series = new ArrayList<Serie>();
+//		askMode();
 		
 		//1er paso: Rellenar el array de series
 		rellenarArraySeries(dirCarpetaTropes);
@@ -30,7 +53,13 @@ public class ColeccionSerie {
 		//4to paso: hacer la lista maestra 2 (de generos)
 		hacerListaMaestra2();
 		
-		//5to paso: generar archivo Weka
+		System.out.println("N series: " + series.size());
+		System.out.println("N generos: " + generos.size());
+		
+		//5to paso: 5to paso: calcular el numero de tropes de cada genero por serie
+		calcularConteoGeneros();
+		
+		//6to paso: generar archivo Weka
 		generarArchivoWeka(dirArchivoWeka);
 	}
 	
@@ -39,10 +68,12 @@ public class ColeccionSerie {
 	 */
 	void rellenarArraySeries(String dirCarpetaTropes){
 		//Obtenemos la lista de archivos en el directorio:
-		ArrayList<String> dirsArchivos = DirectoryFileLister.listFilesForFolderPath(dirCarpetaTropes, "html");
+		ArrayList<String> dirsArchivos = DirectoryFileLister.listFilesForFolderPath(dirCarpetaTropes, ".html");
+		Collections.sort(dirsArchivos);
 		
 		for(int i = 0; i < dirsArchivos.size() ; i++){
-			series.add(new Serie(dirsArchivos.get(i)));	//Por cada archivo, crear una serie y agregarla.
+			String direccionSerie = dirCarpetaTropes + dirsArchivos.get(i);
+			series.add(new Serie(direccionSerie));	//Por cada archivo, crear una serie y agregarla.
 		}
 	}
 	
@@ -80,46 +111,88 @@ public class ColeccionSerie {
 	void rellenarArrayGeneros(String dirCarpetaGeneros){
 		
 		//Obtenemos la lista de archivos en el directorio:
-		ArrayList<String> dirsArchivos = DirectoryFileLister.listFilesForFolderPath(dirCarpetaGeneros, "html");
+		ArrayList<String> dirsArchivos = DirectoryFileLister.listFilesForFolderPath(dirCarpetaGeneros, ".html");
 		
 		for(int i = 0; i < dirsArchivos.size() ; i++){
-			generos.add(new Serie(dirsArchivos.get(i)));	//Por cada archivo, crear un genero y agregarlo.
+			String direccionSerie = dirCarpetaGeneros + dirsArchivos.get(i);
+			generos.add(new Serie(direccionSerie));	//Por cada archivo, crear una genero y agregarlo.
 		}
 	}
+	
+	final int SIN_GENERO = -1;
 	
 	/**
 	 * 4to paso: hacer la lista maestra 2 (de generos)
 	 */
 	void hacerListaMaestra2(){
 		
-		for (int i = 0; i < masterList.size(); i++)
+		for (int i = 0; i < masterList.size(); i++)	//Hacemos que la masterList2 tenga el mismo numero de elementos que masterList 
 			masterList2.add("");
+		/*
+		for (Serie s : generos){
+			for (String t : s.tropes){
+				String currentTrope = 
+				int elemPos;
+				if (elemPos >= 0)
+					masterList2.set();
+			}
+		}*/
 		
 		for (int i = 0; i < generos.size(); i++){
 			for (int j = 0; j < generos.get(i).tropes.size(); j++){	//Iteramos por cada trope de cada genero.
 				String currentTrope = series.get(i).tropes.get(j);	//currentTrope = Trope "j" del genero "i".
 				int elemPos = StringArrayHelper.getElementPosition(masterList, currentTrope);
 				if (elemPos >= 0)	//Si la posicion es valida (esta la trope en el genero actual)
-					
+					masterList2.set(elemPos, generos.get(i).name);	//Colocar el nombre del genero actual.
 			}
 		}
-
-		//Ahora toca pasar los tropes del masterHash al masterList.
-		
-		Iterator<String> i = masterHash.iterator();	//Creamos iterador para iterar por el masterHash.
-		
-		while (i.hasNext()){			//Iteramos por el masterHash.
-			masterList2.add(i.next());	//Pasamos los valores del masterHash a la masterList.
-		}
-		
-		Collections.sort(masterList2);	//Ordenamos la lista maestra.
-		
 	}
 	
 	/**
-	 * 5to paso: generar archivo Weka
+	 * 5to paso: calcular el numero de tropes de cada genero por serie
+	 */
+	void calcularConteoGeneros(){
+		for (int i = 0; i < series.size(); i++){
+			for (int j = 0; j < generos.size(); j++){
+				String nombreGenero = generos.get(j).name;
+				int conteoGenero = 0;
+				for (int k = 0; k < series.get(i).tropes.size(); k++){
+					String nombreTrope = series.get(i).tropes.get(j);
+					int indiceTrope = masterList.indexOf(nombreTrope);
+					if (masterList2.get(indiceTrope) == nombreGenero)
+						conteoGenero++;
+				}
+				series.get(i).genreCount.add(conteoGenero);
+			}
+		}
+	}
+	
+	/**
+	 * 6to paso: generar archivo Weka
 	 */
 	void generarArchivoWeka(String dirCarpetaWeka){
+		String wekaContent = "";
+		wekaContent = wekaContent.concat("@RELATION series");
 		
+		//atributos
+		wekaContent = wekaContent.concat("\n@ATTRIBUTE serieName");
+		wekaContent = wekaContent.concat("\n@ATTRIBUTE tropeNumber");
+		for (int i = 0; i < generos.size(); i++){	//Ponemos cada genero como un atributo
+			wekaContent = wekaContent.concat("\n@ATTRIBUTE " + generos.get(i));
+		}
+		
+		//datos (series)
+		wekaContent = wekaContent.concat("\n@DATA");
+		for (int i = 0; i < series.size(); i++){	//Ponemos cada genero como un atributo
+			wekaContent = wekaContent.concat("\n");
+			wekaContent = wekaContent.concat(series.get(i).name + ",");
+			wekaContent = wekaContent.concat(series.get(i).tropes.size() + ",");
+			for (int j = 0; j < generos.size(); j++){
+				wekaContent = wekaContent.concat(series.get(i).genreCount.toString());
+				if (j < generos.size()-1)
+					wekaContent = wekaContent.concat(",");
+			}
+		}
+		StringToFile.stringToFile(dirCarpetaWeka, wekaContent);
 	}
 }

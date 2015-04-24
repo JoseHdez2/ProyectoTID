@@ -6,6 +6,12 @@ package useful.regex;
 public abstract class RegexCollection {
 	
 	//regexp for getting filenames from paths (Windows)
-	public static final String getFilenameFromPath = "(?<=.*\\\\)(\\w+)(?=\\..*)";
+//	public static final String getFilenameFromPath = "(?<=.*\\\\)(\\w+)(?=\\..*)";
+//	public static final String getExtensionFromPath = "(?<=.*)(\\..*)";
+	
+	//TODO fix	
+	//regexp for getting filenames from paths
+	//unstringified:								/(?<=.*/)(\w+)/
+	public static final String getFilenameFromPath = "(?<=.*/)(\\w+)(?=\\..*)";
 	public static final String getExtensionFromPath = "(?<=.*)(\\..*)";
 }
