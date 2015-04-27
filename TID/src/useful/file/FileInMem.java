@@ -1,6 +1,5 @@
 package useful.file;
 
-import java.io.IOException;
 
 /*
  * Unnecessary class, to have the file's name, path and content in the same container.

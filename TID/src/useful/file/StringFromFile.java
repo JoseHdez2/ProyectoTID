@@ -3,10 +3,7 @@ package useful.file;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
-
-import tvtropes_data_mining.TropeWork;
 
 public class StringFromFile {
 	/**

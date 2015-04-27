@@ -1,9 +1,5 @@
 package tvtropes_data_mining;
 
-import java.util.ArrayList;
-
-import useful.array.IntArrayToOutput;
-import useful.array.StringArrayToOutput;
 
 //TODO create TropesLoader class, for loading from, and dealing with, post-parsing files.
 

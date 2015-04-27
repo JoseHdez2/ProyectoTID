@@ -2,8 +2,8 @@ package useful.regex;
 
 import java.util.ArrayList;
 
-import useful.array.StringArrayToOutput;
 import useful.array.StringArrayToConsole;
+import useful.array.StringArrayToOutput;
 
 public class MatchData {
 	ArrayList<String> matches;	//String for each match.
