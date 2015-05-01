@@ -2,9 +2,6 @@ package useful.regex;
 
 import java.util.ArrayList;
 
-import useful.array.StringArrayToConsole;
-import useful.array.StringArrayToOutput;
-
 public class MatchData {
 	ArrayList<String> matches;	//String for each match.
 	int count;					//Number of total matches.
@@ -12,12 +9,6 @@ public class MatchData {
 	MatchData(){
 		setMatches(new ArrayList<String>());
 		setCount(0);
-	}
-	
-	void showInConsole(){
-		StringArrayToOutput.showInConsole(getMatches());
-		StringArrayToConsole.showInConsole(getMatches());
-		System.out.println("Matches: " + getCount());
 	}
 	
 	public ArrayList<String> getMatches() {

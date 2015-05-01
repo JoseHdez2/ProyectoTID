@@ -19,8 +19,8 @@ public abstract class ParseadorTropes{
 	
 	public static ArrayList<String> parseFile(String htmlContent){
 		
-		// Quiero
-		String tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
+		// Quiero pillar lo que sea, menos "'", que ya formaría parte del lookahead.
+		String tropeRegexp = "[^']+";
 		
 		// Defino el contexto en que estará lo que quiero pillar con la expresión regular. 
 		tropeRegexp = RegexCreator.addLookbehind(lookBehind, tropeRegexp);
