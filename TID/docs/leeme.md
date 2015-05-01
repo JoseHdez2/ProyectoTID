@@ -22,11 +22,17 @@ Los pasos a seguir son:
 
 ####Implementación
 
-Para conocer toda la implementación, sólo se require consultar:
-* `ColeccionSeries.java` *(~200 líneas)*
-* `Serie.java` *(~40 líneas)*
-* `Genero.java` *(~40 líneas) (es igual a Serie.java)*
-* `ListaMaestraTropes.java` *(~50 líneas)*
+La parte de la implementación que concierne al proyecto está contenida en el paquete `tvtropes_data_mining`.
+
+Para conocer toda la implementación, se require consultar las siguientes clases:
+
+Clase | Líneas | Descripción
+-|-|-
+`ColeccionSeries.java` | ~200 | Clase principal
+`Serie.java` | ~40 | Pequeña estructura de datos
+`Genero.java` | ~40 | Clase similar a `Serie.java`
+`ListaMaestraTropes.java` | ~50 | Estructura simple basada en un hash
+
 
 Estos son los archivos de código importantes, y contienen todo el código *completamente comentado*.
 

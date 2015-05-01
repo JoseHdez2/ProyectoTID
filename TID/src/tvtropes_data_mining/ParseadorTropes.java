@@ -9,16 +9,27 @@ import useful.regex.TempRegexMatcher;
 
 public abstract class ParseadorTropes{
 	
+	// Defino el lookahead y lookbehind, que son 
+	// el "contexto" en que estará lo que quiero pillar con la expresión regular.
+	
+	// lookBehind: Quiero pillar lo que tenga esto antes.
 	static String lookBehind = "title='http://tvtropes.org/pmwiki/pmwiki.php/Main/";
+	// lookAhead: Quiero pillar lo que tenga esto después. 
 	static String lookAhead = "'>[^<]+</a>:";
 	
 	public static ArrayList<String> parseFile(String htmlContent){
+		
+		// Quiero
 		String tropeRegexp = "[^']+";	//anything except ', which is the delimiter character.
+		
+		// Defino el contexto en que estará lo que quiero pillar con la expresión regular. 
 		tropeRegexp = RegexCreator.addLookbehind(lookBehind, tropeRegexp);
 		tropeRegexp = RegexCreator.addLookahead(lookAhead, tropeRegexp);
 		
-		//Guardamos los tropes en un objeto MatchData, y los ordenamos alfabeticamente.
+		//Guardamos los tropes en un objeto MatchData.
 		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);
+		
+		//Ordenamos los tropes alfabéticamente.
 		Collections.sort(md.getMatches());
 		
 		//Devolvemos la lista de los tropes.
