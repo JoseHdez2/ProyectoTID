@@ -1,0 +1,58 @@
+<h3 id="programa-de-preprocesamiento">Programa de preprocesamiento</h3>
+<p>La base del programa se fundamenta en la clase <strong>ColeccionSeries</strong>, y su constructor.</p>
+<h4 id="estructuras">Estructuras</h4>
+<p>Existen tres estructuras de datos:</p>
+<ul>
+<li><strong>Series</strong>, que serán los individuos de la población estadística.</li>
+<li><strong>Géneros</strong>, que sirven para asignar el género a cada trope, y por tanto podrían perfectamente descartarse después de haber realizado el <strong>paso 4</strong>.</li>
+<li><strong>Lista maestra</strong>, que contendrá todos los tropes, y la relación de los mismos con el género al que pertenecen.</li>
+</ul>
+<h4 id="pasos">Pasos</h4>
+<p>Los pasos a seguir son:</p>
+<ol>
+<li>Parsear y agregar las <strong>series</strong> (con sus tropes) a un vector.</li>
+<li>Poblar la <strong>lista maestra</strong> con los tropes.</li>
+<li>Parsear y agregar los <strong>géneros</strong> (con sus tropes) a un vector.</li>
+<li>Asignar a cada trope de la <strong>lista maestra</strong> un género.</li>
+<li>Realizar el conteo de los géneros de los tropes de cada serie.</li>
+<li>Crear el archivo Weka.</li>
+</ol>
+<h4 id="implementaci-n">Implementación</h4>
+<p>La parte de la implementación que concierne al proyecto está contenida en el paquete <code>tvtropes_data_mining</code>.</p>
+<p>Para conocer toda la implementación, se require consultar las siguientes clases:</p>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th>Líneas</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ColeccionSeries.java</code></td>
+<td>~200</td>
+<td>Clase principal</td>
+</tr>
+<tr>
+<td><code>Serie.java</code></td>
+<td>~40</td>
+<td>Pequeña estructura de datos</td>
+</tr>
+<tr>
+<td><code>Genero.java</code></td>
+<td>~40</td>
+<td>Clase similar a <code>Serie.java</code></td>
+</tr>
+<tr>
+<td><code>ListaMaestraTropes.java</code></td>
+<td>~50</td>
+<td>Estructura simple basada en un hash</td>
+</tr>
+</tbody>
+</table>
+<p>Estos son los archivos de código importantes, y contienen todo el código <em>completamente comentado</em>.</p>
+<p>Opcionalmente, se puede también mirar:</p>
+<ul>
+<li><code>TropesParser.java</code> <em>(~30 líneas) (Se usa en los constructores de Serie y Genero)</em></li>
+</ul>
