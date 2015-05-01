@@ -37,4 +37,5 @@ Clase | Líneas | Descripción
 Estos son los archivos de código importantes, y contienen todo el código *completamente comentado*.
 
 Opcionalmente, se puede también mirar:
-* `TropesParser.java` *(~30 líneas) (Se usa en los constructores de Serie y Genero)*
+* `Main.java` *(~15 líneas)*: Solo hace una llamada al constructor de `ColeccionSeries.java`
+* `TropesParser.java` *(~30 líneas)*: Se usa en los constructores de Serie y Genero

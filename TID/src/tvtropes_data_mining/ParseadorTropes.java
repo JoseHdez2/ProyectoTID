@@ -20,7 +20,7 @@ public abstract class ParseadorTropes{
 	public static ArrayList<String> parseFile(String htmlContent){
 		
 		// Quiero pillar lo que sea, menos "'", que sería ya parte del lookAhead.
-		String tropeRegexp = "[^']";
+		String tropeRegexp = "[^']+";
 		
 		// Defino el contexto en el que debe estar lo que quiero pillar.
 		tropeRegexp = RegexCreator.addLookbehind(lookBehind, tropeRegexp);

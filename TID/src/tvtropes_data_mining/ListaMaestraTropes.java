@@ -8,6 +8,10 @@ public class ListaMaestraTropes {
 	//Un hash que contendrá todos los tropes, y el género de cada uno.
 	HashMap<String, String> hashMaestro = new HashMap<String, String>();
 	
+	/**
+	 * 2do paso: Agregar los tropes a la lista maestra.
+	 */
+	
 	public void agregarTropes(ArrayList<Serie> series){
 		
 		//Por cada serie...
@@ -22,6 +26,10 @@ public class ListaMaestraTropes {
 			}
 		}
 	}
+	
+	/**
+	 * 4to paso: Agregar los generos a la lista maestra.
+	 */
 	
 	public void agregarGeneros(ArrayList<Genero> generos){
 		

@@ -93,7 +93,7 @@ public class ColeccionSeries {
 		// Por cada archivo, crear un género y agregarlo:
 		for (String nombreArchivo : nombresArchivos){
 			
-			//Convertimos el filepath relativo de cada género en un filepath absoluto.
+			// Convertimos el filepath relativo de cada género en un filepath absoluto.
 			String direccionSerie = dirCarpetaGeneros + nombreArchivo;
 			
 			// Agregamos al vector de géneros un nuevo género.
@@ -110,7 +110,7 @@ public class ColeccionSeries {
 		// Por cada serie...
 		for (Serie s : series){
 			
-			// Primero, inicializamos a 0 para cada género.
+			// Primero, inicializamos a 0 para cada género:
 			// Por cada género...
 			for (Genero g : generos){
 				
@@ -128,7 +128,7 @@ public class ColeccionSeries {
 				String generoDelTrope = listaMaestra.hashMaestro.get(t);
 				
 				// Si el trope no tiene género, contarlo como "desconocido"
-				if ( generoDelTrope == "" ){
+				if ( generoDelTrope == "" || generoDelTrope == null){
 					generoDelTrope = GENERO_DESCONOCIDO;
 				}
 				
@@ -187,7 +187,7 @@ public class ColeccionSeries {
 			for (Genero g : generos){
 
 				// Apuntamos el conteo del género.
-				wekaContent = wekaContent.concat(s.conteoGeneros.get(g) + ",");
+				wekaContent = wekaContent.concat(s.conteoGeneros.get(g.name) + ",");
 			}
 			
 			// Quitamos la ultima coma de la línea, que sobra.
