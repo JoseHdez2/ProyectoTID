@@ -27,11 +27,7 @@ La parte de la implementación que concierne al proyecto está contenida en el p
 Para conocer toda la implementación, se require consultar las siguientes clases:
 
 Clase | Líneas | Descripción
-<<<<<<< HEAD
 -|-|-
-=======
--|-
->>>>>>> branch 'master' of git@github.com:alu0100775846/ProyectoTID.git
 `ColeccionSeries.java` | ~200 | Clase principal
 `Serie.java` | ~40 | Pequeña estructura de datos
 `Genero.java` | ~40 | Clase similar a `Serie.java`
