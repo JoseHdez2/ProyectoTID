@@ -1,8 +1,5 @@
 package tvtropes_data_mining;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,25 +16,6 @@ public class ColeccionSerie {
 	ArrayList<Serie> generos = new ArrayList<Serie>();			//se rellena en el paso 3
 	ArrayList<String> masterList2 = new ArrayList<String>();	//se crea en el paso 4
 	
-	void askMode(){
-		boolean read = false;
-		
-		System.out.println("[P]arsear o [L]eer?");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String response = "";
-		try {
-			response = br.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		if(response.trim().toLowerCase() == "l")
-			System.out.println("Se intentara leer los archivos.");
-		else
-			System.out.println("Se parsearan los archivos.");
-	}
-	
 	ColeccionSerie(String dirCarpetaTropes, String dirCarpetaGeneros, String dirArchivoWeka){
 //		askMode();
 		
@@ -52,9 +30,6 @@ public class ColeccionSerie {
 		
 		//4to paso: hacer la lista maestra 2 (de generos)
 		hacerListaMaestra2();
-		
-		System.out.println("N series: " + series.size());
-		System.out.println("N generos: " + generos.size());
 		
 		//5to paso: 5to paso: calcular el numero de tropes de cada genero por serie
 		calcularConteoGeneros();
@@ -142,8 +117,14 @@ public class ColeccionSerie {
 			for (int j = 0; j < generos.get(i).tropes.size(); j++){	//Iteramos por cada trope de cada genero.
 				String currentTrope = series.get(i).tropes.get(j);	//currentTrope = Trope "j" del genero "i".
 				int elemPos = StringArrayHelper.getElementPosition(masterList, currentTrope);
-				if (elemPos >= 0)	//Si la posicion es valida (esta la trope en el genero actual)
-					masterList2.set(elemPos, generos.get(i).name);	//Colocar el nombre del genero actual.
+				if (elemPos >= 0){	//Si la posicion es valida (esta la trope en el genero actual)
+					//Avisar cada vez que se produzca una colision
+					if(masterList2.get(elemPos) != "")
+						System.out.format("Trope %s tenia genero %s, cambia a %s.%n",
+								masterList.get(elemPos), masterList2.get(elemPos), generos.get(i).name);
+					//Colocar el nombre del genero actual.
+					masterList2.set(elemPos, generos.get(i).name);
+				}
 			}
 		}
 	}
@@ -162,7 +143,7 @@ public class ColeccionSerie {
 					if (masterList2.get(indiceTrope) == nombreGenero)
 						conteoGenero++;
 				}
-				series.get(i).genreCount.add(conteoGenero);
+				series.get(i).conteoGeneros.add(conteoGenero);
 			}
 		}
 	}
@@ -188,7 +169,7 @@ public class ColeccionSerie {
 			wekaContent = wekaContent.concat(series.get(i).name + ",");
 			wekaContent = wekaContent.concat(series.get(i).tropes.size() + ",");
 			for (int j = 0; j < generos.size(); j++){
-				wekaContent = wekaContent.concat(series.get(i).genreCount.toString());
+				wekaContent = wekaContent.concat(series.get(i).conteoGeneros.toString());
 				if (j < generos.size()-1)
 					wekaContent = wekaContent.concat(",");
 			}
