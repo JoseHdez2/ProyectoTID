@@ -19,16 +19,20 @@ public abstract class ParseadorTropes{
 	
 	public static ArrayList<String> parseFile(String htmlContent){
 		
+		// Quiero pillar lo que sea, menos "'", que sería ya parte del lookAhead.
+		String tropeRegexp = "[^']";
+		
+		// Defino el contexto en el que debe estar lo que quiero pillar.
 		tropeRegexp = RegexCreator.addLookbehind(lookBehind, tropeRegexp);
 		tropeRegexp = RegexCreator.addLookahead(lookAhead, tropeRegexp);
 		
-		//Guardamos los tropes en un objeto MatchData.
+		// Guardamos los tropes en un objeto MatchData.
 		MatchData md = TempRegexMatcher.getMatchData(tropeRegexp, htmlContent);
 		
-		//Ordenamos los tropes alfabéticamente.
+		// Ordenamos los tropes alfabéticamente.
 		Collections.sort(md.getMatches());
 		
-		//Devolvemos la lista de los tropes.
+		// Devolvemos la lista de los tropes.
 		return md.getMatches();
 	}
 }
