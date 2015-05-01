@@ -29,3 +29,6 @@ Para conocer toda la implementación, sólo se require consultar:
 * `ListaMaestraTropes.java` *(~50 líneas)*
 
 Estos son los archivos de código importantes, y contienen todo el código *completamente comentado*.
+
+Opcionalmente, se puede también mirar:
+* `TropesParser.java` *(~30 líneas) (Se usa en los constructores de Serie y Genero)*

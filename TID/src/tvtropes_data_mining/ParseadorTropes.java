@@ -7,7 +7,7 @@ import useful.regex.MatchData;
 import useful.regex.RegexCreator;
 import useful.regex.TempRegexMatcher;
 
-public abstract class TropesParser{
+public abstract class ParseadorTropes{
 	
 	static String lookBehind = "title='http://tvtropes.org/pmwiki/pmwiki.php/Main/";
 	static String lookAhead = "'>[^<]+</a>:";

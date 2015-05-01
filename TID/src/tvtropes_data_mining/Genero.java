@@ -23,6 +23,6 @@ public class Genero {
 		String htmlContent = StringFromFile.fromFile(dirArchivoHTML);
 		
 		//Obtenemos el ArrayList de tropes al parsear el HTML
-		tropes = TropesParser.parseFile(htmlContent);
+		tropes = ParseadorTropes.parseFile(htmlContent);
 	}
 }

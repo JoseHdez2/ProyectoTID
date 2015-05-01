@@ -6,7 +6,7 @@ package tvtropes_data_mining;
 public class Main {
 	
 	public static void main(String[] args) {
-		new ColeccionSerie(
+		new ColeccionSeries(
 				"/home/jose/Documents/tid/raw/series/",
 				"/home/jose/Documents/tid/raw/generos/",
 				"/home/jose/Documents/tid/weka/tropes.arff");

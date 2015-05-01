@@ -47,7 +47,7 @@ public class ColeccionSeries {
 		calcularConteoGeneros();
 		
 		// 6to paso: Generar archivo Weka
-		
+		generarArchivoWeka(dirArchivoWeka);
 	}
 	
 	/**
@@ -72,6 +72,10 @@ public class ColeccionSeries {
 			series.add(new Serie(direccionSerie));
 		}
 	}
+	
+	// String que representa al género desconocido.
+	// Esto es para contar también los tropes cuyo género no conocemos.
+	final String GENERO_DESCONOCIDO = "Desconocido";
 	
 	/**
 	 * 3er paso: Rellenar el array de generos
@@ -106,7 +110,18 @@ public class ColeccionSeries {
 		// Por cada serie...
 		for (Serie s : series){
 			
-			// Por cada uno de sus tropes...
+			// Primero, inicializamos a 0 para cada género.
+			// Por cada género...
+			for (Genero g : generos){
+				
+				// Colocamos el nombre de cada género, asociado a 0 (el conteo).
+				s.conteoGeneros.put(g.name, 0);
+			}
+			
+			// Inicializamos a 0 también el contador de tropes con género "desconocido"
+			s.conteoGeneros.put(GENERO_DESCONOCIDO, 0);
+			
+			// Por cada uno de los tropes de la serie...
 			for (String t : s.tropes){
 				
 				// Obtener el género al que pertenece el trope.
@@ -114,15 +129,10 @@ public class ColeccionSeries {
 				
 				// Si el trope no tiene género, contarlo como "desconocido"
 				if ( generoDelTrope == "" ){
-					generoDelTrope = "Desconocido";
+					generoDelTrope = GENERO_DESCONOCIDO;
 				}
 				
-				// Si no se tiene conteo de este género, inicializarlo a uno.
-				if ( s.conteoGeneros.get(generoDelTrope) == null ){
-					s.conteoGeneros.put(generoDelTrope, 1);
-				}
-				
-				// Pero si sí se tiene, añadir uno.
+				// Pero si sí tiene, añadir uno al conteo del género correspondiente.
 				else {
 					int conteo = s.conteoGeneros.get(generoDelTrope);
 					s.conteoGeneros.put(generoDelTrope, conteo + 1);
@@ -134,17 +144,24 @@ public class ColeccionSeries {
 	/**
 	 * 6to paso: generar archivo Weka
 	 */
-	void generarArchivoWeka(String dirCarpetaWeka){
+	void generarArchivoWeka(String dirArchivoWeka){
 		
 		// String que será el contenido del archivo.
 		String wekaContent = "";
+		
+		// Colocamos lo que viene a ser el "título" del archivo Weka.
 		wekaContent = wekaContent.concat("@RELATION series");
+		
+		// Pasamos a escribir los atributos que tendrá cada caso:
 		
 		// El nombre de cada serie será un atributo.
 		wekaContent = wekaContent.concat("\n@ATTRIBUTE nombreSerie");
 		
 		// El número de tropes de cada serie será un atributo.
 		wekaContent = wekaContent.concat("\n@ATTRIBUTE numeroTropes");
+		
+		// El género desconocido (su porcentaje en la serie) será un atributo.
+		wekaContent = wekaContent.concat("\n@ATTRIBUTE " + GENERO_DESCONOCIDO);
 		
 		// Cada género (su porcentaje en la serie) será un atributo.
 		for (Genero g : generos){
@@ -163,27 +180,20 @@ public class ColeccionSeries {
 			// Apuntamos su número de tropes.
 			wekaContent = wekaContent.concat(s.tropes.size() + ",");
 			
-			// Por cada género...
+			// Apuntamos el conteo del género desconocido.
+			wekaContent = wekaContent.concat(s.conteoGeneros.get(GENERO_DESCONOCIDO) + ",");
+			
+			// Por cada género, apuntamos su conteo:
 			for (Genero g : generos){
-				//
-				// Obtener el conteo del género.
-				s.conteoGeneros.get(g);
+
+				// Apuntamos el conteo del género.
+				wekaContent = wekaContent.concat(s.conteoGeneros.get(g) + ",");
 			}
 			
-			// Quitamos la ultima coma, que sobra.
+			// Quitamos la ultima coma de la línea, que sobra.
 			wekaContent = wekaContent.substring(0, wekaContent.length()-1);
 		}
-		
-		for (int i = 0; i < series.size(); i++){	//Ponemos cada genero como un atributo
-			wekaContent = wekaContent.concat("\n");
-			wekaContent = wekaContent.concat(series.get(i).name + ",");
-			wekaContent = wekaContent.concat(series.get(i).tropes.size() + ",");
-			for (int j = 0; j < generos.size(); j++){
-				wekaContent = wekaContent.concat(series.get(i).conteoGeneros.toString());
-				if (j < generos.size()-1)
-					wekaContent = wekaContent.concat(",");
-			}
-		}
-		StringToFile.stringToFile(dirCarpetaWeka, wekaContent);
+
+		StringToFile.stringToFile(dirArchivoWeka, wekaContent);
 	}
 }

@@ -39,7 +39,7 @@ public class ListaMaestraTropes {
 				// Avisar en caso de que ya existiese un género asignado al trope.
 				if (hashMaestro.get(t) != "") {
 					System.err.format("El trope %s ya tenia como genero '%s',", t, hashMaestro.get(t));
-					System.err.format(" y se le quiso asignar '%s'", g.name);
+					System.err.format(" y se le quiso asignar '%s'%n", g.name);
 				}
 				
 				// Incluimos el trope con su género.
