@@ -9,10 +9,14 @@ class Genero
     # Le asignamos el nombre del archivo como nombre.
     @name = File.basename(dirArchivoHTML, File.extname(dirArchivoHTML))
 
-    # Array con cada uno de los tropes de la serie.
-    # Obtenemos el array de tropes al parsear el HTML.
-    @tropes = ParseadorTropes.parsearArchivo(dirArchivoHTML)
+    # Array con cada uno de los tropes del genero.
+    @tropes = []
 
+    if (modo == "L")
+      @tropes = ParseadorTropes.leerArchivo(dirArchivoHTML)
+    else
+      @tropes = ParseadorTropes.parsearArchivo(dirArchivoHTML)
+    end
   end
 
 end

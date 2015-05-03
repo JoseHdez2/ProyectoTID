@@ -3,50 +3,37 @@ load "Serie.rb"
 GENERO_DESCONOCIDO = "Desconocido"
 
 CARPETA_TROPES_RAW = "/home/jose/Documents/tid/raw/series"
-CARPETA_TROPES_PRO =
+CARPETA_TROPES_PRO = "/home/jose/Documents/tid/pro/series"
 CARPETA_GENEROS_RAW = "/home/jose/Documents/tid/raw/generos"
-CARPETA_GENEROS_PRO =
+CARPETA_GENEROS_PRO = "/home/jose/Documents/tid/pro/generos"
 ARCHIVO_WEKA = "/home/jose/Documents/tid/weka/tropes.arff"
 
 
 class EstudioSeries
-  def initialize()
-    # Array con las series, cada una con sus tropes.
-    @series = []
-    # Array con los géneros, cada uno con sus tropes.
-    @generos = []
+
+  # La funcion mas importante
+  def realizarEstudio()
+
+    series = []  # Array con las series, cada una con sus tropes.
+    generos = [] # Array con los géneros, cada uno con sus tropes.
 
     # Hash con cada trope asignado al género al que pertenece.
 	  # Le das el nombre de un trope y te devuelve su género.
     # El valor que devuelve por defecto es GENERO_DESCONOCIDO.
-    @hashMaestro = Hash.new(GENERO_DESCONOCIDO)
+    hashMaestro = Hash.new(GENERO_DESCONOCIDO)
 
-    # Modo. :P => parseado, :L => lectura
-    @cargaTropes = "P"
-    @cargaGeneros = "P"
-
-    # Carpetas donde buscar los archivos
-    @carpetaTropes = CARPETA_TROPES_RAW
-    @carpetaGeneros = CARPETA_GENEROS_RAW
-    @dirArchivoWeka = DIR_ARCHIVO_WEKA
-  end
-
-  # La funcion mas importante
-  def realizarEstudio(carpetaTropes, carpetaGeneros, dirArchivoWeka)
+    cargaTropes = "P"
+    cargaGeneros = "P"
 
     preguntarModos()
 
-    # 1er paso: Rellenar el array de series.
+    # 1er paso: Cargar las series en un array.
 		parsearArraySeries(carpetaTropes)
 
-		# 2do paso: Agregar los tropes a la lista maestra.
-    # No se realiza.
-		#listaMaestra.agregarTropes(series)
-
-		# 3er paso: Rellenar el array de generos.
+		# 2do paso: Cargar los generos en un array.
 		rellenarArrayGeneros(carpetaGeneros)
 
-		# 4to paso: Agregar los generos a la lista maestra.
+		# 3er paso: .
 		listaMaestra.agregarGeneros(generos)
 
 		# 5to paso: Calcular los conteos de generos por cada serie.
@@ -54,129 +41,6 @@ class EstudioSeries
 
 		# 6to paso: Generar archivo Weka
 		generarArchivoWeka(dirArchivoWeka)
-  end
-
-  def preguntar(pregunta)
-    # Inferimos las posibles respuestas
-    posiblesRespuestas = pregunta.scan(/(?<=\[).*?(?=\])/)
-
-    # Si no hay respuestas predefinidas, se da libre eleccion.
-    if posiblesRespuestas.empty
-      p pregunta + ":"
-      return gets.chomp
-    end
-
-    # Pasamos las respuestas a mayusculas
-    posiblesRespuestas.collect! { |resp| resp.upcase() }
-    answer = ""
-
-    # Mientras la respuesta no coincida con niguna de las posibles...
-    while posiblesRespuestas.include?(answer) == false do
-      p pregunta + ":"
-      answer = gets.chomp.upcase
-    end
-    return answer
-  end
-
-  def preguntarModos()
-    bien = false
-    while bien == false do
-
-      # Preguntar por el modo de carga de tropes
-      @cargaTropes = preguntar("Tropes: [P]arseado o [L]ectura? ")
-
-      @carpetaTropes = ( @cargaTropes == "P") ? CARPETA_TROPES_RAW : CARPETA_TROPES_PRO
-
-      # Preguntar por la carpeta de carga de tropes.
-      puts "Carpeta de carga de tropes: " + @carpetaTropes
-      if preguntar("Cambiar carpeta? [S]i, [N]o ") == "S"
-        @carpetaTropes = preguntar("Nueva carpeta")
-      end
-
-      # Preguntar por la carpeta de carga de tropes.
-      puts "Carpeta de carga de tropes: " + @carpetaTropes
-      if preguntar("Cambiar carpeta? [S]i, [N]o ") == "S"
-        @carpetaTropes = preguntar("Nueva carpeta")
-      end
-
-      # Preguntar por el modo de carga de generos.
-      @cargaGeneros = preguntar("Generos: [P]arseado o [L]ectura? ")
-
-      # Preguntar por la carpeta de carga de tropes.
-      puts "Carpeta de carga de generos: " + @carpetaGeneros
-      if preguntar("Cambiar carpeta? [S]i, [N]o ") == "S"
-        @carpetaTropes = preguntar("Nueva carpeta")
-      end
-
-      # Preguntar si todo bien, para salir del bucle.
-      answer = preguntar("Bien asi? [S]i, [N]o ")
-      bien = (answer == "S") ? true : false
-    end
-  end
-
-  #
-  # 1er paso: Rellenar el array de series.
-  #
-  def rellenarArraySeriesParseando(carpetaTropes)
-
-    # Colocamos las dir de los HTML en un array.
-    dirsSeries = Dir[carpetaTropes+"/*.html"]
-
-    # Ordenamos los archivos alfabéticamente.
-    dirsSeries.sort!
-
-    # Por cada archivo,
-    # crear una serie y agregarla al array.
-
-    seriesCount = 0
-    dirsSeries.each do |dir|
-      @series.push(Serie.new(dir))
-      seriesCount += 1
-      puts "series cargadas: #{seriesCount}"
-    end
-  end
-  #
-  # 1er paso: Rellenar el array de series.
-  #
-  def rellenarArraySeriesLeyendo(carpetaTropes)
-
-    # Colocamos las dir de los HTML en un array.
-    dirsSeries = Dir[carpetaTropes+"/*.html"]
-
-    # Ordenamos los archivos alfabéticamente.
-    dirsSeries.sort!
-
-    # Por cada archivo,
-    # crear una serie y agregarla al array.
-
-    seriesCount = 0
-    dirsSeries.each do |dir|
-      @series.push(Serie.new(dir))
-      seriesCount += 1
-      puts "progress: #{seriesCount}%"
-    end
-  end
-
-  #
-  # 2do paso: Agregar los tropes al hash maestro. Ya no se realiza.
-  #
-
-  #
-  # 3er paso: Rellenar el array de generos.
-  #
-  def rellenarArrayGeneros(carpetaGeneros)
-
-    # Colocamos las dir de los HTML en un array.
-    dirsSeries = File[carpetaGeneros+"/*.html"]
-
-    # Ordenamos los archivos alfabéticamente.
-    dirsSeries.sort!
-
-    # Por cada archivo,
-    # crear un género y agregarlo al array.
-    dirSeries.each do |dir|
-      @series.push(Genero.new(dir))
-    end
   end
 
   #

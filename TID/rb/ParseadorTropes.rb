@@ -24,4 +24,13 @@ class ParseadorTropes
     # Devolvemos lo que casa con la expresión.
     return contents.scan(tropeRegexp)
   end
+
+  def self.leerArchivo(pathArchivo)
+    # Leemos los contenidos del archivo.
+    contents = File.open(pathArchivo, "rb").read
+
+    # Suponiendo que el archivo consiste en los objetos separados por "\n"...
+    # Devolvemos el array de objetos.
+    return contents.split
+  end
 end
