@@ -15,13 +15,13 @@ public class ListaMaestraTropes {
 	public void agregarTropes(ArrayList<Serie> series){
 		
 		//Por cada serie...
-		for (Serie s : series){
+		for (Serie serie : series){
 			
 			//Por cada uno de sus tropes...
-			for (String t: s.tropes){
+			for (String trope: serie.tropes){
 				
 				//Incluimos el trope "t" en el hash maestro
-				hashMaestro.put(t, "");
+				hashMaestro.put(trope, "");
 				//El segundo parámetro es vacío-- por ahora desconocemos el género.
 			}
 		}
@@ -34,24 +34,25 @@ public class ListaMaestraTropes {
 	public void agregarGeneros(ArrayList<Genero> generos){
 		
 		// Por cada género...
-		for (Genero g : generos){
+		for (Genero genero : generos){
 			
 			// Por cada uno de sus tropes...
-			for (String t : g.tropes){
+			for (String trope : genero.tropes){
 				
 				// Avisar en caso de que no existiese dicho trope en el hash maestro.
-				if (!hashMaestro.containsKey(t)) {
-					System.err.println("No existe el trope " + t + " en el hashMaestro!");
+				if (!hashMaestro.containsKey(trope)) {
+					System.err.println("No existe el trope " + trope + " en el hashMaestro!");
 				}
 				
 				// Avisar en caso de que ya existiese un género asignado al trope.
-				if (hashMaestro.get(t) != "") {
-					System.err.format("El trope %s ya tenia como genero '%s',", t, hashMaestro.get(t));
-					System.err.format(" y se le quiso asignar '%s'%n", g.name);
+				else if (hashMaestro.get(trope) != "") {
+					System.err.format("El trope %s ya tenia como genero '%s',", trope, hashMaestro.get(trope));
+					System.err.format(" y se le quiso asignar '%s'%n", genero.name);
 				}
 				
-				// Incluimos el trope con su género.
-				hashMaestro.put(t, g.name);
+				// Si todo esta bien, incluimos el trope con su género.
+				else
+					hashMaestro.put(trope, genero.name);
 			}
 		}
 	}

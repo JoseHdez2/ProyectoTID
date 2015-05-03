@@ -26,8 +26,10 @@ La parte de la implementación que concierne al proyecto está contenida en el p
 
 Para conocer toda la implementación, se require consultar las siguientes clases:
 
+
 Clase | Líneas | Descripción
 -|-|-
+`Main.java` | ~15 | Sólo llama al constructor de `ColeccionSeries.java`
 `ColeccionSeries.java` | ~200 | Clase principal
 `Serie.java` | ~40 | Pequeña estructura de datos
 `Genero.java` | ~40 | Clase similar a `Serie.java`
@@ -37,5 +39,5 @@ Clase | Líneas | Descripción
 Estos son los archivos de código importantes, y contienen todo el código *completamente comentado*.
 
 Opcionalmente, se puede también mirar:
-* `Main.java` *(~15 líneas)*: Solo hace una llamada al constructor de `ColeccionSeries.java`
-* `TropesParser.java` *(~30 líneas)*: Se usa en los constructores de Serie y Genero
+
+* `TropesParser.java` *(~30 líneas)*: Se usa en los constructores de Serie y Genero.
