@@ -4,6 +4,7 @@ CARPETA_TROPES_PRO = "/home/jose/Documents/tid/pro/series"
 CARPETA_GENEROS_RAW = "/home/jose/Documents/tid/raw/generos"
 CARPETA_GENEROS_PRO = "/home/jose/Documents/tid/pro/generos"
 ARCHIVO_WEKA = "/home/jose/Documents/tid/weka/tropes.arff"
+ARCHIVO_CLASS_SERIES = "/home/jose/Documents/tid/pro/csv/class_series.csv"
 
 PREGUNTAR = false
 
@@ -14,6 +15,7 @@ class OpcionesEstudio
     @carpetaTropes = CARPETA_TROPES_RAW
     @carpetaGeneros = CARPETA_GENEROS_RAW
     @rutaWeka = ARCHIVO_WEKA
+    @rutaClassSeries = ARCHIVO_CLASS_SERIES
 
     if PREGUNTAR
       self.preguntarOpciones()
@@ -30,6 +32,10 @@ class OpcionesEstudio
 
   def rutaWeka
     @rutaWeka
+  end
+
+  def rutaClassSeries
+    @rutaClassSeries
   end
 
   def confirmarOpciones()
