@@ -1,5 +1,6 @@
-load "Parseador.rb"
-load "Serie.rb"
+load "./paso_1/Parseador.rb"
+
+MAX_PARSE_ITEMS = 9001
 
 class ParseadorTropes < Parseador
 
@@ -22,6 +23,7 @@ class ParseadorTropes < Parseador
   end
 
   def self.leerSerie(ruta)
+    # Asignamos como nombre el nombre del archivo.
     nombre = File.basename(ruta, File.extname(ruta))
     return Serie.new(nombre, self.leer(ruta))
   end
@@ -41,7 +43,7 @@ class ParseadorTropes < Parseador
       series.push(ParseadorTropes.parsearSerie(ruta))
       count += 1
       puts "series cargadas: #{count}"
-      if count == 20
+      if count == MAX_PARSE_ITEMS
         break
       end
     end

@@ -4,7 +4,7 @@ def preguntar(pregunta)
   posiblesRespuestas = pregunta.scan(/(?<=\[).*?(?=\])/)
 
   # Si no hay respuestas predefinidas, se da libre eleccion.
-  if posiblesRespuestas.empty
+  if posiblesRespuestas.empty?
     p pregunta + ":"
     return gets.chomp
   end
@@ -19,4 +19,12 @@ def preguntar(pregunta)
     answer = gets.chomp.upcase
   end
   return answer
+end
+
+def confirmar(nombre, valor)
+  puts "#{nombre.capitalize}: #{valor}"
+  if preguntar("Cambiar #{nombre}? [S]i, [N]o") == "S"
+    valor = preguntar("Nuevo valor")
+  end
+  return valor
 end
