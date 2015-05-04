@@ -14,11 +14,10 @@ Existen tres estructuras de datos:
 Los pasos a seguir son:
 
 1. Parsear y agregar las **series** (con sus tropes) a un vector.
-2. Poblar la **lista maestra** con los tropes.
-3. Parsear y agregar los **géneros** (con sus tropes) a un vector.
-4. Asignar a cada trope de la **lista maestra** un género.
-5. Realizar el conteo de los géneros de los tropes de cada serie.
-6. Crear el archivo Weka.
+2. Parsear y agregar los **géneros** (con sus tropes) a un vector.
+3. Asignar a cada trope de la **lista maestra** un género.
+4. Realizar el conteo de los géneros de los tropes de cada serie.
+5. Crear el archivo Weka.
 
 ####Implementación
 

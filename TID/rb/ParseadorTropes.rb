@@ -1,6 +1,9 @@
-class ParseadorTropes
+load "Parseador.rb"
+load "Serie.rb"
 
-  def self.makeRegexp()
+class ParseadorTropes < Parseador
+
+  def self.expresionTrope()
     # El lookAhead. Quiero pillar lo que tenga esto antes.
     regexStrings = ["(?<=title='http://tvtropes.org/pmwiki/pmwiki.php/Main/)"]
     # El "cuerpo". Quiero pillar esto.
@@ -14,23 +17,35 @@ class ParseadorTropes
     return Regexp.new(regexStrings)
   end
 
-  def self.parsearArchivo(pathArchivo)
-    # Leemos los contenidos del archivo.
-    contents = File.open(pathArchivo, "rb").read
-
-    # Creamos la expresión regular para capturar los tropes.
-    tropeRegexp = self.makeRegexp()
-
-    # Devolvemos lo que casa con la expresión.
-    return contents.scan(tropeRegexp)
+  def self.parsear(ruta)
+    Parseador.parsear(ruta, self.expresionTrope())
   end
 
-  def self.leerArchivo(pathArchivo)
-    # Leemos los contenidos del archivo.
-    contents = File.open(pathArchivo, "rb").read
+  def self.leerSerie(ruta)
+    nombre = File.basename(ruta, File.extname(ruta))
+    return Serie.new(nombre, self.leer(ruta))
+  end
 
-    # Suponiendo que el archivo consiste en los objetos separados por "\n"...
-    # Devolvemos el array de objetos.
-    return contents.split
+  def self.parsearSerie(ruta)
+    nombre = File.basename(ruta, File.extname(ruta))
+    return Serie.new(nombre, self.parsear(ruta))
+  end
+
+  def self.parsearCarpeta(carpeta)
+    rutas_series = Dir[carpeta+"/*.html"]
+    rutas_series.sort!
+
+    series = []
+    count = 0
+    rutas_series.each do |ruta|
+      series.push(ParseadorTropes.parsearSerie(ruta))
+      count += 1
+      puts "series cargadas: #{count}"
+      if count == 20
+        break
+      end
+    end
+
+    return series
   end
 end
