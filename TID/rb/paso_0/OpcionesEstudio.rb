@@ -1,7 +1,7 @@
 
 CARPETA_TROPES_RAW = "/home/jose/Documents/tid/raw/series"
 CARPETA_TROPES_PRO = "/home/jose/Documents/tid/pro/series"
-CARPETA_GENEROS_RAW = "/home/jose/Documents/tid/raw/generos"
+CARPETA_GENEROS_RAW = "/home/jose/Documents/tid/raw/generos_0_base"
 CARPETA_GENEROS_PRO = "/home/jose/Documents/tid/pro/generos"
 ARCHIVO_WEKA = "/home/jose/Documents/tid/weka/tropes.arff"
 ARCHIVO_CLASS_SERIES = "/home/jose/Documents/tid/pro/csv/class_series.csv"

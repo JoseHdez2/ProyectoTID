@@ -1,6 +1,6 @@
 load "./paso_1/Parseador.rb"
 
-MAX_PARSE_ITEMS = 2000
+MAX_PARSE_ITEMS = 20
 
 class ParseadorTropes < Parseador
 

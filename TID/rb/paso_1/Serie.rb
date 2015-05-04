@@ -23,6 +23,10 @@ class Serie
     @genero
   end
 
+  def genero=(string)
+    @genero = string
+  end
+
   def conteoGeneros
     @conteoGeneros
   end
