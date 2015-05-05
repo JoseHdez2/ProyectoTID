@@ -4,11 +4,7 @@ class Serie
   def initialize(nombre, tropes)
     @nombre = nombre  # Nombre de serie / genero.
     @tropes = tropes # Array con los tropes de serie / genero.
-    @genero = GENERO_DESCONOCIDO
-
-    # Hash con el conteo de los tropes de cada serie.
-    # El valor que retornará por defecto para cualquier clave será 0.
-    @conteoGeneros = Hash.new(0)
+    @generos = Hash.new(0)
   end
 
   def tropes
@@ -19,16 +15,16 @@ class Serie
     @nombre
   end
 
-  def genero
-    @genero
+  def generos
+    @generos
   end
 
   def genero=(string)
     @genero = string
   end
 
-  def conteoGeneros
-    @conteoGeneros
+  def puntuacionGeneros
+    @puntuacionGeneros
   end
 
 end

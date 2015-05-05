@@ -1,13 +1,11 @@
 
-def escribir_weka(rutaWeka, series, generos)
+def escribir_weka(rutaWeka, series)
 
-  # contenidoWeka = String que será el contenido del archivo.
-  contenidoWeka = ""
+  contenidoWeka = "@RELATION series"
 
-  # Colocamos lo que viene a ser el "título" del archivo Weka.
-  contenidoWeka += "@RELATION series"
-
-  # Pasamos a escribir los atributos que tendrá cada caso:
+  #
+  # Atributos
+  #Inferimos
 
   # El nombre de cada serie será un atributo.
   contenidoWeka += "\n@ATTRIBUTE nombreSerie STRING"
@@ -18,14 +16,26 @@ def escribir_weka(rutaWeka, series, generos)
   # El género desconocido (su porcentaje en la serie) será un atributo.
   contenidoWeka += "\n@ATTRIBUTE #{GENERO_DESCONOCIDO} NUMERIC"
 
+  # Extraemos posibles generos a partir del hash "clasificacion_tropes"
+  generos = []
+  clasificacion_tropes.each do |trope, hash_generos|
+    hash_generos.each_key do |genero|
+      generos.push(genero) unless generos.include?(genero)
+    end
+  end
+
   # Cada género (su porcentaje en la serie) será un atributo.
-  generos.each { |g| contenidoWeka += "\n@ATTRIBUTE #{g.nombre} NUMERIC" }
+  generos.each { |g| contenidoWeka += "\n@ATTRIBUTE #{g} NUMERIC" }
 
   # Declaramos que empezaremos a introducir la población de datos.
   contenidoWeka += "\n@DATA"
 
   # Por cada serie, escribimos una línea que la representa:
   series.each do |serie|
+
+    # Skip series without any tropes.
+    next if serie.tropes.size == 0
+
     # Abrimos una nueva línea.
     contenidoWeka += "\n"
     # Apuntamos el nombre de la serie.
@@ -34,12 +44,12 @@ def escribir_weka(rutaWeka, series, generos)
     contenidoWeka += "#{serie.tropes.size},"
 
     # Apuntamos el conteo del género desconocido.
-    contenidoWeka += "#{serie.conteoGeneros[GENERO_DESCONOCIDO] / serie.tropes.size.to_f},"
+    contenidoWeka += "#{serie.puntuacionGeneros[GENERO_DESCONOCIDO] / serie.tropes.size.to_f},"
 
-    # Por cada género, apuntamos su conteo:
+    # Por cada género, apuntamos su puntuacion:
     generos.each do |g|
       if serie.tropes.size > 0
-        contenidoWeka += "#{serie.conteoGeneros[g.nombre] / serie.tropes.size.to_f},"
+        contenidoWeka += "#{serie.puntuacionGeneros[g] / serie.tropes.size.to_f},"
       else
         contenidoWeka += "0,"
       end

@@ -55,7 +55,7 @@ class ParseadorTropes < Parseador
       if count == MAX_PARSE_ITEMS
         break
       end
-  end
+    end
 
     return series
   end

@@ -9,7 +9,7 @@ def contar_tropes(conjuntos, clasificacion)
       generoDelTrope = clasificacion[trope]
 
       # Incrementamos al conteo de dicho genero en esta serie.
-      serie.conteoGeneros[generoDelTrope] = serie.conteoGeneros[generoDelTrope] + 1
+      serie.puntuacionGeneros[generoDelTrope] = serie.puntuacionGeneros[generoDelTrope] + 1
     end
   end
   return conjuntos
