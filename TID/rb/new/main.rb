@@ -15,22 +15,29 @@ ARCHIVO_CLASS_SERIES = "/home/jose/Documents/tid/pro/csv/class_series.csv"
 CLASIFICAR_TROPES_CON_GENEROS = true
 CLASIFICAR_TROPES_CON_SERIES = false
 
+DECIMALES_REDONDEO = 3
+
 def estudiar_series
-  # 1 # TODO con puntos?? o indiferente?!
+  puts "paso 1: cargar series"
   series = cargar_series(CARPETA_SERIES, true)
-  # 2
+
+  puts "paso 2: clasificar tropes"
   generos = {}
   if CLASIFICAR_TROPES_CON_GENEROS
     generos = cargar_series(CARPETA_GENEROS, generos)
   end
   if CLASIFICAR_TROPES_CON_SERIES
     clases_series = hash_from_csv(ARCHIVO_CLASS_SERIES)
-    generos2 = clases_series_a_generos(clases_series, series, generos)
+    generos = clases_series_a_generos(clases_series, series, generos)
   end
-  # 3
   clasificacion_tropes = clasificar_tropes(series, generos)
-  # 4
-  binding.pry
+
+  puts "paso 3: clasificar series"
+  clasificacion_series = clasificar_series(clasificacion_tropes, series)
+
+  puts "paso 4: escribir archivo Weka"
+  escribir_weka(ARCHIVO_WEKA, clasificacion_series)
+
 end
 
 estudiar_series

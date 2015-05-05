@@ -4,7 +4,7 @@ def clasificar_tropes(series, generos, clasificacion_tropes = Hash.new { |h,k| h
   series.each_value do |tropes_de_serie|
     tropes_de_serie.each do |trope|
       # Si no existia el trope en la clasificacion, crearlo.
-      clasificacion_tropes[trope] = Hash.new(0) if not clasificacion_tropes.key(trope)
+      clasificacion_tropes[trope] = Hash.new(0) if not clasificacion_tropes.key?(trope)
     end
   end
 
@@ -28,7 +28,8 @@ def clasificar_tropes(series, generos, clasificacion_tropes = Hash.new { |h,k| h
     # Obtenemos el total de asignaciones que se hicieron a este trope.
     total_score = generos_trope.values.inject(:+)
     # Por cada genero asignado a este trope, normalizamos su valor.
-    generos_trope.each_value { |score| score = score / total_score.to_f }
-    binding.pry
+    generos_trope.each do |key,val|
+      generos_trope[key] = (val / total_score.to_f).round(DECIMALES_REDONDEO)
+    end
   end
 end

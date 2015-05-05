@@ -1,6 +1,6 @@
 require "./paso_1/expresion_regular_trope"
 
-MAX_PARSE_ITEMS = 20
+MAX_PARSE_ITEMS = 2000
 
 def parsear(ruta, expresion)
   # Cargamos el contenido
