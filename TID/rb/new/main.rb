@@ -35,6 +35,7 @@ def estudiar_series
   puts "paso 3: clasificar series"
   clasificacion_series = clasificar_series(clasificacion_tropes, series)
 
+  binding.pry
   puts "paso 4: escribir archivo Weka"
   escribir_weka(ARCHIVO_WEKA, clasificacion_series)
 

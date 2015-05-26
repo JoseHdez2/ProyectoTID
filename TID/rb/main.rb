@@ -23,6 +23,7 @@ def estudiarSeries
   clasificacion_tropes = clasificar_tropes_usando_series(series)
   #3 contar
   series = contar_tropes(series, clasificacion_tropes)
+  
   #4 guardar
   escribir_weka(rutaWeka, series, clasificacion_tropes)
 end
